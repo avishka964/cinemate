@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct DBUser: Codable {
+struct Users: Codable {
     let userId: String
     let email: String?
     let photoUrl: String?
@@ -26,8 +26,7 @@ struct DBUser: Codable {
         userId: String,
         email: String? = nil,
         photoUrl: String? = nil,
-        dateCreated: Date? = nil,
-        isPremium: Bool? = nil
+        dateCreated: Date? = nil
     ) {
         self.userId = userId
         self.email = email
@@ -62,12 +61,12 @@ final class UserManagerModel {
         return decoder
     }()
     
-    func createNewUser(user: DBUser) async throws {
+    func createNewUser(user: Users) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false, encoder: encoder)
     }
     
-    func getUser(userId: String) async throws -> DBUser {
-        try await userDocument(userId: userId).getDocument(as: DBUser.self, decoder: decoder)
+    func getUser(userId: String) async throws -> Users {
+        try await userDocument(userId: userId).getDocument(as: Users.self, decoder: decoder)
     }
     
 }

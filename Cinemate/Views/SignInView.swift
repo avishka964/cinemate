@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-
-
 struct SignInView: View {
     
     @StateObject private var viewModel = AuthenticationViewModel()
+    @Binding var showSignInView: Bool
     
     var body: some View {
         ZStack {
@@ -33,7 +32,7 @@ struct SignInView: View {
                     Task {
                         do {
                             try await viewModel.signInGoogle()
-                            //redirect
+                            showSignInView = false
                             print("Login success")
                         } catch {
                             print(error)
@@ -58,12 +57,16 @@ struct SignInView: View {
                 })
                 .padding(.bottom)
                 
-                Group {
-                    Text("Don’t have an account? ") +
-                    Text("Sign up").bold().foregroundStyle(Color("CSRed"))
-                }
-                .font(.custom(CustomFont.Roboto.medium, size: 15))
-                .foregroundStyle(.white)
+                HStack(alignment: .center) {
+                    Group {
+                        Text("Privacy Policy ").foregroundStyle(Color("CSRed")) +
+                        Text("and ") +
+                        Text("Terms of Service").foregroundStyle(Color("CSRed"))
+                    }
+                    .font(.custom(CustomFont.Roboto.medium, size: 13))
+                    .foregroundStyle(.white)
+                }.frame(maxWidth: .infinity)
+
             }
             .padding(.horizontal)
             .padding(.bottom, 35)
@@ -75,5 +78,5 @@ struct SignInView: View {
 }
 
 #Preview {
-    SignInView()
+    SignInView(showSignInView: .constant(false))
 }

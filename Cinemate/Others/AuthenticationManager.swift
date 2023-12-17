@@ -38,7 +38,7 @@ final class AuthenticationManager {
     }
 }
 
-//MARK: SSO
+//MARK: Google SSO
 extension AuthenticationManager {
     @discardableResult
     func signInWithGoogle(tokens: GoogleSignInResultModel) async throws -> AuthDataResultModel {

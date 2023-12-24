@@ -18,20 +18,24 @@ struct MainTabView: View {
                     .tabItem {
                         Image(systemName: "house")
                             .environment(\.symbolVariants, .none)
+                        Text("Home")
                     }
                 SearchView()
                     .tabItem {
                         Image(systemName: "magnifyingglass")
+                        Text("Search")
                     }
                 WatchListView()
                     .tabItem {
                         Image(systemName: "bookmark")
                             .environment(\.symbolVariants, .none)
+                        Text("Watchlist")
                     }
                 ProfileView(showSignInView: $showSignInView)
                     .tabItem {
                         Image(systemName: "person.circle")
                             .environment(\.symbolVariants, .none)
+                        Text("Profile")
                     }
             }
             .toolbarBackground(Color("CSTab"), for: .tabBar)

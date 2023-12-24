@@ -13,15 +13,31 @@ struct MainTabView: View {
     
     var body: some View {
         TabView {
-            HomeView()
-                .tabItem { Label("Home", systemImage: "house")}
-            SearchView()
-                .tabItem { Label("Search", systemImage: "magnifyingglass")}
-            WatchListView()
-                .tabItem { Label("Search", systemImage: "bookmark")}
-            ProfileView(showSignInView: $showSignInView)
-                .tabItem { Label("Profile", systemImage: "person")}
+            Group {
+                HomeView()
+                    .tabItem {
+                        Image(systemName: "house")
+                            .environment(\.symbolVariants, .none)
+                    }
+                SearchView()
+                    .tabItem {
+                        Image(systemName: "magnifyingglass")
+                    }
+                WatchListView()
+                    .tabItem {
+                        Image(systemName: "bookmark")
+                            .environment(\.symbolVariants, .none)
+                    }
+                ProfileView(showSignInView: $showSignInView)
+                    .tabItem {
+                        Image(systemName: "person.circle")
+                            .environment(\.symbolVariants, .none)
+                    }
+            }
+            .toolbarBackground(Color("CSTab"), for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
         }
+        .accentColor(Color("CSRed"))
     }
 }
 

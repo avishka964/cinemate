@@ -51,7 +51,7 @@ struct SignInView: View {
                         
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 15)
+                    .padding(.vertical, 13)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 })

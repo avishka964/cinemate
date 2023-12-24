@@ -9,7 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text("Home")
+        VStack{
+            Text("Home").foregroundStyle(.white)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity).background(.black)
     }
 }
 

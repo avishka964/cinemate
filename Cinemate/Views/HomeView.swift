@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @State var selected: Int = 1
+    @State private var isShowGeners: Bool = false
     var body: some View {
         
         ScrollView(showsIndicators: false) {
@@ -62,11 +63,16 @@ struct HomeView: View {
                 ScrollView(.horizontal, showsIndicators: false, content: {
                     LazyHStack {
                         ForEach(1...5, id: \.self) { value in
-                            GenreChipView()
+                            GenreChipView().onTapGesture(perform: {
+                                isShowGeners.toggle()
+                            })
                         }
                     }
                 }).frame(height: 55)
             }
+            .sheet(isPresented: $isShowGeners, content: {
+                GenreView()
+            })
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }

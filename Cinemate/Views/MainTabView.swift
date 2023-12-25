@@ -16,7 +16,7 @@ struct MainTabView: View {
             Group {
                 HomeView()
                     .tabItem {
-                        Image(systemName: "house")
+                        Image(systemName: "film.stack")
                             .environment(\.symbolVariants, .none)
                         Text("Home")
                     }

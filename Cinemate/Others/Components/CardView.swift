@@ -13,7 +13,7 @@ struct CardView: View {
             Image("landscape-3")
                 .resizable()
                 .scaledToFill()
-                .frame(width: 200, height: 200)
+                .frame(width: 170, height: 200)
             VStack(alignment: .leading) {
                 Text("Avatar").font(.custom(CustomFont.Roboto.medium, size: 20))
                 Text("December 14, 2022").font(.custom(CustomFont.Roboto.regular, size: 15))

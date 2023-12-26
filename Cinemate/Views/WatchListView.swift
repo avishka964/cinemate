@@ -38,6 +38,7 @@ struct WatchListView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationDestination(for: Int.self) {movie in
                 DetailsView()
+                .navigationBarBackButtonHidden()
             }
         }
     }

@@ -70,7 +70,7 @@ struct HomeView: View {
                     ScrollView(.horizontal, showsIndicators: false, content: {
                         LazyHStack {
                             ForEach(1...5, id: \.self) { genre in
-                                GenreChipView().onTapGesture(perform: {
+                                GenreChipView(padding: 10, frameHeight: 55, textColor: Color(Color("CSBW"))).onTapGesture(perform: {
                                     isShowGeners.toggle()
                                 })
                             }
@@ -84,6 +84,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }.navigationDestination(for: Int.self) { movie in
                 DetailsView()
+                .navigationBarBackButtonHidden()
             }
         }
     }

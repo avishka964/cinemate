@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct GenreChipView: View {
+    
+    let padding: CGFloat
+    let frameHeight: CGFloat
+    let textColor: Color
+    
     var body: some View {
         ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: 7.0).fill(Color("CSBlack"))
-            Text("Adventure").padding()
-        }.frame(height: 50)
+            Text("Adventure").padding(padding).foregroundColor(textColor)
+        }.frame(height: frameHeight)
     }
 }
 
 #Preview {
-    GenreChipView()
+    GenreChipView(padding: 3, frameHeight: 55, textColor: .white)
 }

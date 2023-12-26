@@ -17,6 +17,7 @@ struct SignInView: View {
             Image("signin")
                 .resizable()
             Rectangle()
+                .fill(Color.black)
                 .mask(
                     LinearGradient(gradient: Gradient(colors: [Color.black, .clear]), startPoint: .bottom, endPoint: .top))
             

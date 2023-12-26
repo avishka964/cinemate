@@ -17,36 +17,44 @@ struct SearchView: View {
     ]
     
     var body: some View {
-        VStack {
-            //MARK: heading
-            HeadingView(mainHeading: "Search", subHeading: "Find Your Film: Search and Explore")
-            //MARK: search field
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .imageScale(.small)
-                TextField("Search movie", text: $searchText)
-                    .font(.subheadline)
-            }
-            .frame(height: 44)
-            .padding(.horizontal)
-            .overlay {
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(lineWidth: 1.5)
-                    .foregroundStyle(Color("CSGray"))
-            }
-            //MARK: search results
-            ScrollView(.vertical, showsIndicators: false, content: {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(1...5, id: \.self) { value in
-                        CardView()
-                    }
+        NavigationStack {
+            VStack {
+                //MARK: heading
+                HeadingView(mainHeading: "Search", subHeading: "Find Your Film: Search and Explore")
+                //MARK: search field
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .imageScale(.small)
+                    TextField("Search movie", text: $searchText)
+                        .font(.subheadline)
                 }
-            })
-            .padding(.top)
-            Spacer()
+                .frame(height: 44)
+                .padding(.horizontal)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(lineWidth: 1.5)
+                        .foregroundStyle(Color("CSGray"))
+                }
+                //MARK: search results
+                ScrollView(.vertical, showsIndicators: false, content: {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(1...5, id: \.self) { movie in
+                            NavigationLink(value: movie) {
+                                CardView()
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                })
+                .padding(.top)
+                Spacer()
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationDestination(for: Int.self) { movie in
+                DetailsView()
+            }
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

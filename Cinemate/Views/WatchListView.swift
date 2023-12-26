@@ -15,23 +15,31 @@ struct WatchListView: View {
     ]
     
     var body: some View {
-        VStack {
-            //MARK: heading
-            HeadingView(mainHeading: "Watchlist", subHeading: "Build Your Playlist: Save and Enjoy")
-            //MARK: watchlist result
-            ScrollView(.vertical, showsIndicators: false, content: {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(1...5, id: \.self) { value in
-                        CardView()
+        NavigationStack {
+            VStack {
+                //MARK: heading
+                HeadingView(mainHeading: "Watchlist", subHeading: "Build Your Playlist: Save and Enjoy")
+                //MARK: watchlist result
+                ScrollView(.vertical, showsIndicators: false, content: {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(1...5, id: \.self) { movie in
+                            NavigationLink(value: movie) {
+                                CardView()
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                     }
-                }
-            })
-            .padding(.top)
-            
-            Spacer()
+                })
+                .padding(.top)
+                
+                Spacer()
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationDestination(for: Int.self) {movie in
+                DetailsView()
+            }
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

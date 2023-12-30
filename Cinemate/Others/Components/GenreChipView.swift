@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GenreChipView: View {
     
+    let name: String
     let padding: CGFloat
     let frameHeight: CGFloat
     let textColor: Color
@@ -16,11 +17,11 @@ struct GenreChipView: View {
     var body: some View {
         ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: 7.0).fill(Color("CSBlack"))
-            Text("Adventure").padding(padding).foregroundColor(textColor)
-        }.frame(height: frameHeight)
+            Text(name).padding(padding).foregroundColor(textColor)
+        }.frame(width: 150, height: frameHeight)
     }
 }
 
 #Preview {
-    GenreChipView(padding: 3, frameHeight: 55, textColor: .white)
+    GenreChipView(name: "Action", padding: 3, frameHeight: 55, textColor: .white)
 }

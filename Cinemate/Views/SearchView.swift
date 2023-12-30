@@ -40,7 +40,7 @@ struct SearchView: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(1...5, id: \.self) { movie in
                             NavigationLink(value: movie) {
-                                CardView()
+//                                CardView()
                             }
                             .buttonStyle(PlainButtonStyle())
                         }

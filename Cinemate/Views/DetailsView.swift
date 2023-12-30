@@ -61,7 +61,7 @@ struct DetailsView: View {
                 ScrollView(.horizontal, showsIndicators: false, content: {
                     LazyHStack {
                         ForEach(1...3, id: \.self) { genre in
-                            GenreChipView(padding: 5, frameHeight: 15, textColor: Color("CSGray"))
+//                            GenreChipView(padding: 5, frameHeight: 15, textColor: Color("CSGray"))
                         }
                     }
                 }).frame(height: 55)

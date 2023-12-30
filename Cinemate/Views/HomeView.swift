@@ -9,10 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State var selected: Int = 1
+    @StateObject private var viewModel = HomeViewModel()
+    @State var selected: String = "day"
     @State private var isShowGeners: Bool = false
+    @State private var genreName: String = ""
+    @State private var genreId: Int = 0
+    
+    
     var body: some View {
-        
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading){
@@ -33,20 +37,24 @@ struct HomeView: View {
                             selection: $selected,
                             label: Text("Picker"),
                             content: {
-                                Text("TODAY").tag(1)
-                                Text("WEEK").tag(2)
-                            }).pickerStyle(.segmented)
+                                Text("TODAY").tag("day")
+                                Text("WEEK").tag("week")
+                            }).onChange(of: selected) { oldValue, newValue in
+                                viewModel.fetchTrendingMovies(type: newValue)
+                            }.pickerStyle(.segmented)
                     }
                     .padding(.vertical)
                     .frame(width: 250, alignment: .leading)
                     ScrollView(.horizontal, showsIndicators: false, content: {
                         LazyHStack {
-                            ForEach(1...5, id: \.self) { movie in
-                                NavigationLink(value: movie) {
-                                    CardView()
+                            ForEach(viewModel.trendingMovies, id: \.id) { movie in
+                                NavigationLink(value: movie.id) {
+                                    CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
+                        }.onAppear{
+                            viewModel.fetchTrendingMovies(type: selected)
                         }
                     }).frame(height: 300)
                     //MARK: upcoming section
@@ -55,12 +63,14 @@ struct HomeView: View {
                         .padding(.vertical)
                     ScrollView(.horizontal, showsIndicators: false, content: {
                         LazyHStack {
-                            ForEach(1...5, id: \.self) { movie in
-                                NavigationLink(value: movie) {
-                                    CardView()
+                            ForEach(viewModel.upcomingMovies, id: \.id) { movie in
+                                NavigationLink(value: movie.id) {
+                                    CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
+                        }.onAppear {
+                            viewModel.fetchUpcomingMovies()
                         }
                     }).frame(height: 300)
                     //MARK: genres section
@@ -69,16 +79,20 @@ struct HomeView: View {
                         .padding(.vertical)
                     ScrollView(.horizontal, showsIndicators: false, content: {
                         LazyHStack {
-                            ForEach(1...5, id: \.self) { genre in
-                                GenreChipView(padding: 10, frameHeight: 55, textColor: Color(Color("CSBW"))).onTapGesture(perform: {
+                            ForEach(viewModel.genresList, id: \.id) { genre in
+                                GenreChipView(name: genre.name, padding: 10, frameHeight: 55, textColor: Color(Color("CSBW"))).onTapGesture(perform: {
+                                    genreName = genre.name
+                                    genreId = genre.id
                                     isShowGeners.toggle()
                                 })
                             }
+                        }.onAppear {
+                            viewModel.fetchGenres()
                         }
                     }).frame(height: 55)
                 }
                 .sheet(isPresented: $isShowGeners, content: {
-                    GenreView()
+                    GenreView(genreName: $genreName, genreId: $genreId)
                 })
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -19,7 +19,7 @@ struct DetailsView: View {
         ScrollView {
             //MARK: backdrop poster
             ZStack(alignment: .topLeading) {
-                Image("landscape-1")
+                Image("landscape-3")
                     .resizable()
                     .scaledToFit()
                 LinearGradient(gradient: Gradient(colors: [Color("CSFog"), Color.clear]), startPoint: .bottom, endPoint: UnitPoint(x: 0.5, y: gradientEndPercentage))
@@ -61,7 +61,7 @@ struct DetailsView: View {
                 ScrollView(.horizontal, showsIndicators: false, content: {
                     LazyHStack {
                         ForEach(1...3, id: \.self) { genre in
-                            GenreChipView(padding: 7, frameHeight: 15, textColor: Color("CSGray"))
+                            GenreChipView(padding: 5, frameHeight: 15, textColor: Color("CSGray"))
                         }
                     }
                 }).frame(height: 55)

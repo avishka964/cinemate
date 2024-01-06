@@ -49,7 +49,7 @@ struct HomeView: View {
                         LazyHStack {
                             ForEach(viewModel.trendingMovies, id: \.id) { movie in
                                 NavigationLink(value: movie.id) {
-                                    CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath)
+                                    CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath ?? "")
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
@@ -58,19 +58,19 @@ struct HomeView: View {
                         }
                     }).frame(height: 300)
                     //MARK: upcoming section
-                    Text("Upcoming")
+                    Text("Top Rated")
                         .font(.custom(CustomFont.Roboto.bold, size: 20))
                         .padding(.vertical)
                     ScrollView(.horizontal, showsIndicators: false, content: {
                         LazyHStack {
-                            ForEach(viewModel.upcomingMovies, id: \.id) { movie in
+                            ForEach(viewModel.topMovies, id: \.id) { movie in
                                 NavigationLink(value: movie.id) {
-                                    CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath)
+                                    CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath ?? "")
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
                         }.onAppear {
-                            viewModel.fetchUpcomingMovies()
+                            viewModel.fetchTopMovies()
                         }
                     }).frame(height: 300)
                     //MARK: genres section

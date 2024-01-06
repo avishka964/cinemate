@@ -25,7 +25,7 @@ struct GenreView: View {
             ScrollView(.vertical, showsIndicators: false, content: {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.genresMovies, id: \.id) { movie in
-                        CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath)
+                        CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath ?? "")
                     }
                 }.onAppear{
                     viewModel.fetchMoviesByGenres(genreId: genreId)

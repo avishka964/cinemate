@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     
-    @State var searchText: String = ""
+    @StateObject private var viewModel = SearchViewModel()
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: nil, alignment: nil),
@@ -25,8 +25,12 @@ struct SearchView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .imageScale(.small)
-                    TextField("Search movie", text: $searchText)
+                    TextField("Search movie", text: $viewModel.searchName)
                         .font(.subheadline)
+                        .submitLabel(.search)
+                        .onSubmit {
+                            viewModel.fetchSearchMovies()
+                        }
                 }
                 .frame(height: 44)
                 .padding(.horizontal)
@@ -38,9 +42,9 @@ struct SearchView: View {
                 //MARK: search results
                 ScrollView(.vertical, showsIndicators: false, content: {
                     LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(1...5, id: \.self) { movie in
-                            NavigationLink(value: movie) {
-//                                CardView()
+                        ForEach(viewModel.searchMovies, id: \.id) { movie in
+                            NavigationLink(value: movie.id) {
+                               CardView(title: movie.title, date: movie.releaseDate, posterPath: movie.posterPath ?? "")
                             }
                             .buttonStyle(PlainButtonStyle())
                         }

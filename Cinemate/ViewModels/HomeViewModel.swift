@@ -8,14 +8,14 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    @Published var upcomingMovies: [Movie] = []
+    @Published var topMovies: [Movie] = []
     @Published var genresList: [Genre] = []
     @Published var genresMovies: [Movie] = []
     @Published var trendingMovies: [Movie] = []
     
-    //MARK: fetch upcoming movies
-    func fetchUpcomingMovies() {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1")!
+    //MARK: fetch top rated movies
+    func fetchTopMovies() {
+        let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [
@@ -35,9 +35,9 @@ class HomeViewModel: ObservableObject {
                     let decoder = JSONDecoder()
                     let decodedData = try decoder.decode(MovieListResponse.self, from: data)
                     DispatchQueue.main.async {
-                        self.upcomingMovies = decodedData.results
+                        self.topMovies = decodedData.results
                     }
-//                    print("upcoming res: \(decodedData.results)")
+//                    print("top_rated res: \(decodedData.results)")
                 } catch {
                     DispatchQueue.main.async {
                         print("Decoding Error: \(error.localizedDescription)")
@@ -50,7 +50,7 @@ class HomeViewModel: ObservableObject {
     
     //MARK: fetch genres
     func fetchGenres() {
-        let url = URL(string: "https://api.themoviedb.org/3/genre/movie/list?language=en")!
+        let url = URL(string: "https://api.themoviedb.org/3/genre/movie/list")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [
@@ -84,8 +84,7 @@ class HomeViewModel: ObservableObject {
     }
     //MARK: fetch movies by genres
     func fetchMoviesByGenres(genreId: Int) {
-        print("id: \(genreId)")
-        let url = URL(string: "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=\(genreId)")!
+        let url = URL(string: "https://api.themoviedb.org/3/discover/movie?with_genres=\(genreId)")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [
@@ -119,7 +118,7 @@ class HomeViewModel: ObservableObject {
     //MARK: fetch movies by genres
     func fetchTrendingMovies(type: String) {
         print("type \(type)")
-        let url = URL(string: "https://api.themoviedb.org/3/trending/movie/\(type)?language=en-US")!
+        let url = URL(string: "https://api.themoviedb.org/3/trending/movie/\(type)")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [

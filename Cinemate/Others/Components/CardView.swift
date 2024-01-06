@@ -44,9 +44,9 @@ struct CardView: View {
                 }
             }
             VStack(alignment: .leading) {
-                Text(title).lineLimit(1).font(.custom(CustomFont.Roboto.medium, size: 20))
+                Text(title).lineLimit(1).font(.custom(CustomFont.Roboto.medium, size: 20)).frame(width: 165, alignment: .leading)
                 Text(formattedDate).font(.custom(CustomFont.Roboto.regular, size: 15))
-            }.padding().frame(width: 170)
+            }.padding().frame(width: 165, alignment: .leading)
         }
         .background(Color("CSBlack"))
         .clipShape(RoundedRectangle(cornerRadius: 10.0))
@@ -54,5 +54,5 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(title: "Title", date: "2023-12-30", posterPath: "/bkpPTZUdq31UGDovmszsg2CchiI.jpg")
+    CardView(title: "Title", date: "2023-06-30", posterPath: "/bkpPTZUdq31UGDovmszsg2CchiI.jpg")
 }

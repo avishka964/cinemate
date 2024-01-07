@@ -1,4 +1,4 @@
-//
+
 //  DetailsView.swift
 //  Cinemate
 //
@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import YouTubePlayerKit
 
 struct DetailsView: View {
     
@@ -14,7 +15,6 @@ struct DetailsView: View {
     
     @State var player = AVPlayer()
     let gradientEndPercentage: CGFloat = 0.3
-    var videoUrl: String = "https://www.w3schools.com/html/mov_bbb.mp4"
     @Environment(\.dismiss) var dismiss
     
     //MARK: date formatter
@@ -33,7 +33,7 @@ struct DetailsView: View {
     
     //MARK: time formatter
     var formattedTime: String {
-        let totalMinutes = viewModel.details?.runtime ?? 0 
+        let totalMinutes = viewModel.details?.runtime ?? 0
         let hours = totalMinutes / 60
         let minutes = totalMinutes % 60
         
@@ -48,7 +48,6 @@ struct DetailsView: View {
         }
     }
     
-    
     var body: some View {
         ScrollView(showsIndicators: false) {
             //MARK: backdrop poster
@@ -56,7 +55,9 @@ struct DetailsView: View {
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500\(viewModel.details?.backdropPath ?? "")")) { phase in
                     switch phase {
                     case .empty:
-                        Skeleton(cornerRadius: 0, width: 170, height: 200)
+                        VStack(alignment: .center) {
+                            Image(systemName: "photo.fill").renderingMode(.original).font(.largeTitle).frame(width: 200, height: 200)
+                        }.frame(maxWidth: .infinity)
                     case .success(let image):
                         image
                             .resizable()
@@ -75,6 +76,7 @@ struct DetailsView: View {
                 LinearGradient(gradient: Gradient(colors: [Color("CSFog"), Color.clear]), startPoint: .bottom, endPoint: UnitPoint(x: 0.5, y: gradientEndPercentage))
                 Button {
                     dismiss()
+                    viewModel.isFetchDetails = false
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.black)
@@ -117,7 +119,6 @@ struct DetailsView: View {
                                 }
                             }
                         }
-                        
                     }
                 }).frame(height: 55)
                 //MARK: movie overview
@@ -134,11 +135,19 @@ struct DetailsView: View {
                 .padding(.bottom)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 //MARK: movie video
-                let url = URL(string: "https://www.w3schools.com/html/mov_bbb.mp4")
-                if url != nil {
-                    VideoPlayer(player: AVPlayer(url: url!))
-                        .frame(height: 200)
-                        .cornerRadius(10)
+                
+                
+                if viewModel.isFetchDetails {
+                    let url: String  = "https://youtube.com/watch?v=psL_5RIBqnY"
+                    YouTubePlayerView(
+                        "https://youtube.com/watch?v=psL_5RIBqnY"
+                            )
+                    .frame(height: 200)
+                    .cornerRadius(10)
+                    .onAppear{
+                        viewModel.fetchVideoDetails(movieId: viewModel.details?.id ?? 0)
+                    }
+                    
                 }
                 //MARK: movie overview
                 HStack {
@@ -170,13 +179,18 @@ struct DetailsView: View {
                     .font(.custom(CustomFont.Roboto.bold, size: 15))
                     .padding(.bottom, 2)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                ScrollView(.horizontal, showsIndicators: false, content: {
-                    LazyHStack {
-                        ForEach(1...3, id: \.self) { genre in
-                            CastCardView()
+                
+                if viewModel.isFetchDetails {
+                    ScrollView(.horizontal, showsIndicators: false, content: {
+                        LazyHStack {
+                            ForEach(viewModel.cast, id: \.id) { cast in
+                                CastCardView(name: cast.name, character: cast.character, profilePath: cast.profilePath ?? "")
+                            }
+                        }.onAppear {
+                            viewModel.fetchCreditsDetails(movieId: viewModel.details?.id ?? 0)
                         }
-                    }
-                })
+                    })
+                }
             }
             .padding(.horizontal)
             Spacer()

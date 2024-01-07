@@ -56,7 +56,7 @@ struct SearchView: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationDestination(for: Int.self) { movie in
-                DetailsView()
+                DetailsView(movieId: movie)
                 .navigationBarBackButtonHidden()
             }
         }

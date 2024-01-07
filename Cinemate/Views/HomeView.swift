@@ -15,7 +15,6 @@ struct HomeView: View {
     @State private var genreName: String = ""
     @State private var genreId: Int = 0
     
-    
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -40,6 +39,7 @@ struct HomeView: View {
                                 Text("TODAY").tag("day")
                                 Text("WEEK").tag("week")
                             }).onChange(of: selected) { oldValue, newValue in
+                                viewModel.trendingMovies = []
                                 viewModel.fetchTrendingMovies(type: newValue)
                             }.pickerStyle(.segmented)
                     }
@@ -97,7 +97,7 @@ struct HomeView: View {
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }.navigationDestination(for: Int.self) { movie in
-                DetailsView()
+                DetailsView(movieId: movie)
                 .navigationBarBackButtonHidden()
             }
         }

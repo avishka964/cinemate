@@ -10,7 +10,6 @@ import Foundation
 struct VideoDetails: Codable {
     let name: String
     let key: String
-    let site: String
     let type: String
     let id: String
 }

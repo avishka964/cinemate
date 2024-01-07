@@ -45,7 +45,7 @@ struct CardView: View {
             }
             VStack(alignment: .leading) {
                 Text(title).lineLimit(1).font(.custom(CustomFont.Roboto.medium, size: 20)).frame(width: 165, alignment: .leading)
-                Text(formattedDate).font(.custom(CustomFont.Roboto.regular, size: 15))
+                Text(formattedDate).font(.custom(CustomFont.Roboto.regular, size: 13))
             }.padding().frame(width: 165, alignment: .leading)
         }
         .background(Color("CSBlack"))

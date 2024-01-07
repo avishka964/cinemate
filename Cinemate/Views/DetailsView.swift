@@ -13,6 +13,8 @@ struct DetailsView: View {
     
     @StateObject private var viewModel = DetailsViewModel()
     
+    let movieId: Int
+    
     @State var player = AVPlayer()
     let gradientEndPercentage: CGFloat = 0.3
     @Environment(\.dismiss) var dismiss
@@ -96,7 +98,7 @@ struct DetailsView: View {
                         Text("\(formattedDate) - \(viewModel.details?.originalLanguage ?? "-")")
                             .font(.custom(CustomFont.Roboto.regular, size: 15))
                             .foregroundStyle(Color("CSGray"))
-                        Text(viewModel.details?.originalTitle ?? "")
+                        Text(viewModel.details?.title ?? "")
                             .font(.custom(CustomFont.Roboto.bold, size: 20))
                             .padding(.top, 0.5)
                     }
@@ -135,10 +137,7 @@ struct DetailsView: View {
                 .padding(.bottom)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 //MARK: movie video
-                
-                
                 if viewModel.isFetchDetails {
-                    let url: String  = "https://youtube.com/watch?v=psL_5RIBqnY"
                     YouTubePlayerView(
                         "https://youtube.com/watch?v=psL_5RIBqnY"
                             )
@@ -198,11 +197,11 @@ struct DetailsView: View {
         .toolbar(.hidden, for: .tabBar)
         .ignoresSafeArea()
         .onAppear {
-            viewModel.fetchMovieDetails()
+            viewModel.fetchMovieDetails(movieId: movieId)
         }
     }
 }
 
 #Preview {
-    DetailsView()
+    DetailsView(movieId: 278)
 }

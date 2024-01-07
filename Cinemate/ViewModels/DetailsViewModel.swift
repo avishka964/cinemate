@@ -16,8 +16,8 @@ class DetailsViewModel: ObservableObject {
     @Published var videoKey: String = ""
     
     //MARK: fetch details of movies
-    func fetchMovieDetails() {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/278")!
+    func fetchMovieDetails(movieId: Int) {
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [

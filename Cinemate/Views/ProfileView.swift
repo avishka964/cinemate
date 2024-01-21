@@ -19,15 +19,25 @@ struct ProfileView: View {
                 HeadingView(mainHeading: "Profile", subHeading: "Behind the Screens: Your Movie Profile")
                 
                 VStack {
-                    Image("cp")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 100, height: 100)
-                        .clipShape(Circle())
-                        .padding(.vertical)
-                    Text("Mark Brown").font(.custom(CustomFont.Roboto.regular, size: 16))
-                        .padding(.bottom, 1)
                     if let user = viewModel.user {
+                        //MARK: photo url
+                        AsyncImage(url: URL(string: user.photoUrl ?? "")) { phase in
+                            switch phase {
+                            case .empty:
+                                Skeleton(cornerRadius: 50, width: 100, height: 100)
+                            case .success(let image):
+                                image.resizable()
+                                    .scaledToFill()
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(Circle())
+                                    .padding(.vertical)
+                            case .failure:
+                                Image(systemName: "photo.fill").renderingMode(.original).font(.largeTitle).frame(width: 100, height: 100)
+                            default:
+                                Image(systemName: "photo.fill").renderingMode(.original).font(.largeTitle).frame(width: 100, height: 100)
+                            }
+                        }
+                        //MARK: email
                         Text(user.email ?? "").font(.custom(CustomFont.Roboto.regular, size: 14)).tint(Color("CSGray"))
                     }
                 }.task {

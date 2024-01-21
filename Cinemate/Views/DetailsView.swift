@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AVKit
 import YouTubePlayerKit
 
 struct DetailsView: View {
@@ -14,8 +13,6 @@ struct DetailsView: View {
     @StateObject private var viewModel = DetailsViewModel()
     
     let movieId: Int
-    
-    @State var player = AVPlayer()
     let gradientEndPercentage: CGFloat = 0.3
     @Environment(\.dismiss) var dismiss
     
@@ -138,15 +135,24 @@ struct DetailsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 //MARK: movie video
                 if viewModel.isFetchDetails {
-                    YouTubePlayerView(
-                        "https://youtube.com/watch?v=psL_5RIBqnY"
-                            )
+                    let youTubePlayer = YouTubePlayer(
+                        source: .video(id: viewModel.videoKey),
+                        configuration: .init(
+                            autoPlay: false
+                        )
+                    )
+                    YouTubePlayerView(youTubePlayer) { state in
+                        switch state {
+                        case .idle:
+                            ProgressView()
+                        case .ready:
+                            EmptyView()
+                        case .error(_):
+                            Text(verbatim: "YouTube player couldn't be loaded")
+                        }
+                    }
                     .frame(height: 200)
                     .cornerRadius(10)
-                    .onAppear{
-                        viewModel.fetchVideoDetails(movieId: viewModel.details?.id ?? 0)
-                    }
-                    
                 }
                 //MARK: movie overview
                 HStack {
@@ -203,5 +209,5 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(movieId: 278)
+    DetailsView(movieId: 272)
 }

@@ -10,7 +10,15 @@ import Foundation
 @MainActor
 final class ProfileViewModel: ObservableObject {
     
+    @Published private(set) var user: Users? = nil
+    
+    func loadCurrrnetUser() async throws {
+        let authDataResult = try AuthenticationManager.shared.getAuthenticatedUser()
+        self.user = try await UserManagerModel.shared.getUser(userId: authDataResult.uid)
+    }
+    
+    
     func signOut() throws {
-           try AuthenticationManager.shared.signOut()
+        try AuthenticationManager.shared.signOut()
     }
 }

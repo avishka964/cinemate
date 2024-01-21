@@ -11,13 +11,12 @@ import Foundation
 class DetailsViewModel: ObservableObject {
     @Published var details: MovieDetail?
     @Published var cast: [CreditsDetails] = []
-    @Published var videos: [VideoDetails] = []
     @Published var isFetchDetails: Bool = false
     @Published var videoKey: String = ""
     
     //MARK: fetch details of movies
     func fetchMovieDetails(movieId: Int) {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?append_to_response=videos")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [
@@ -33,14 +32,18 @@ class DetailsViewModel: ObservableObject {
                 return
             }
             if let data = data {
+//                let jsonString = String(data: data, encoding: .utf8)
+//                print("JSON Response: \(jsonString ?? "")")
                 do {
                     let decoder = JSONDecoder()
                     let decodedData = try decoder.decode(MovieDetail.self, from: data)
+                    let filterdVideo = decodedData.videos?.results.filter {$0.type == "Trailer"}
                     DispatchQueue.main.async {
                         self.details = decodedData
                         self.isFetchDetails = true
+                        self.videoKey = filterdVideo?[0].key ?? ""
                     }
-//                    print("details res: \(decodedData)")
+//                    print("details res: \(filterdVideo?[0].key ?? "")")
                 } catch let error as DecodingError {
                     print("Decoding Error: \(error)")
                 } catch {
@@ -85,42 +88,4 @@ class DetailsViewModel: ObservableObject {
         }
         dataTask.resume()
     }
-    //MARK: video details
-    func fetchVideoDetails(movieId: Int) {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/videos")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = [
-            "accept": "application/json",
-            "Authorization": Secrets.accessToken
-        ]
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                DispatchQueue.main.async {
-                    print("Error: \(error.localizedDescription)")
-                }
-                return
-            }
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let decodedData = try decoder.decode(VideoResponse.self, from: data)
-                    let filterdVideo = decodedData.results.filter {$0.type == "Trailer"}
-                    DispatchQueue.main.async {
-                        self.videos = filterdVideo
-                        self.videoKey = filterdVideo[0].key
-                    }
-                    print("video res: \(filterdVideo)")
-                } catch let error as DecodingError {
-                    print("Decoding Error: \(error)")
-                } catch {
-                    print("Error: \(error.localizedDescription)")
-                }
-            }
-        }
-        dataTask.resume()
-    }
-    
-    
 }

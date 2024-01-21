@@ -27,7 +27,11 @@ struct ProfileView: View {
                         .padding(.vertical)
                     Text("Mark Brown").font(.custom(CustomFont.Roboto.regular, size: 16))
                         .padding(.bottom, 1)
-                    Text("markbrown@yahoo.com").font(.custom(CustomFont.Roboto.regular, size: 14)).tint(Color("CSGray"))
+                    if let user = viewModel.user {
+                        Text(user.email ?? "").font(.custom(CustomFont.Roboto.regular, size: 14)).tint(Color("CSGray"))
+                    }
+                }.task {
+                    try? await viewModel.loadCurrrnetUser()
                 }
                 //MARK: options
                 ZStack {
@@ -69,6 +73,7 @@ struct ProfileView: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        
     }
 }
 

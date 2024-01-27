@@ -22,6 +22,8 @@ Get started with the [TMDB API](https://developer.themoviedb.org/docs/getting-st
 
 > iOS version: 17.0
 
+https://github.com/avishka964/cinemate/assets/62757898/88a5e155-a05a-4378-ae7d-4b5567a9c31e
+
 ### Dark mode and light mode
 <img src="https://github.com/avishka964/cinemate/assets/62757898/0e4f9670-e2cc-4f88-bf6f-4ffea99364de" width="393" height="852"/>
 

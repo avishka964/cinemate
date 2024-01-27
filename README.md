@@ -28,3 +28,25 @@ Get started with the [TMDB API](https://developer.themoviedb.org/docs/getting-st
 <img src="https://github.com/avishka964/cinemate/assets/62757898/3841b330-a2c0-4186-8ffe-d7fdb62eccee" width="393" height="852"/>
 
 ### Prerequisites
+- Xcode: Ensure you have Xcode installed on your development machine.
+- Firebase Account: Create a Firebase project and set up Firebase Authentication and Database.
+- TMDB API Read Access Token: Obtain an API Read Access Token from TMDB to access their movie data.
+
+1. Clone the repository
+    ```
+    git clone https://github.com/avishka964/cinemate.git
+    ```
+2. Configure Firebase
+    - Add your Firebase configuration plist file to the project.
+    - Update the Firebase settings in the app accordingly.
+    
+3. Configure TMDB API Read Access Token
+   
+4. Add YouTubePlayerKit Package:
+    - The app uses the [YouTubePlayerKit](https://github.com/SvenTiigi/YouTubePlayerKit) package for displaying YouTube videos. Ensure that you have integrated this package into your project.
+   
+5. Build and run the app in Xcode.
+
+
+
+

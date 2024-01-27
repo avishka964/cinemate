@@ -11,10 +11,12 @@ import Foundation
 final class ProfileViewModel: ObservableObject {
     
     @Published private(set) var user: Users? = nil
+    @Published var isHaveUser: Bool = false
     
     func loadCurrrnetUser() async throws {
         let authDataResult = try AuthenticationManager.shared.getAuthenticatedUser()
         self.user = try await UserManagerModel.shared.getUser(userId: authDataResult.uid)
+        isHaveUser = true
     }
     
     

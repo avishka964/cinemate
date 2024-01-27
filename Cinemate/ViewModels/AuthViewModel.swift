@@ -9,13 +9,14 @@ import Foundation
 
 
 @MainActor
-final class AuthenticationViewModel: ObservableObject {
+final class AuthViewModel: ObservableObject {
     
     func signInGoogle() async throws {
         let helper = SignInGooogleHelper()
         let tokens = try await helper.signIn()
         let authDataResult = try await AuthenticationManager.shared.signInWithGoogle(tokens: tokens)
         let user = Users(auth: authDataResult)
+        print(user)
         try await UserManagerModel.shared.createNewUser(user: user)
     }
 }

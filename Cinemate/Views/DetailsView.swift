@@ -11,6 +11,8 @@ import YouTubePlayerKit
 struct DetailsView: View {
     
     @StateObject private var viewModel = DetailsViewModel()
+    @StateObject private var watchlistViewModel = WatchlistViewModel()
+    @StateObject private var profileViewModel = ProfileViewModel()
     
     let movieId: Int
     let gradientEndPercentage: CGFloat = 0.3
@@ -43,7 +45,7 @@ struct DetailsView: View {
         } else if minutes > 0 {
             return "\(minutes)min"
         } else {
-            return "0min"
+            return "-"
         }
     }
     
@@ -87,6 +89,8 @@ struct DetailsView: View {
                         .padding(.top, 52)
                         .padding(.leading, 32)
                 }
+            }.task {
+                try? await profileViewModel.loadCurrrnetUser()
             }
             VStack {
                 //MARK: movie title and bookmark
@@ -100,8 +104,9 @@ struct DetailsView: View {
                             .padding(.top, 0.5)
                     }
                     Spacer()
+                    //MARK: bookmark button
                     Button(action: {
-                        print("Circular Button tapped")
+                        watchlistViewModel.addMovie(id: viewModel.details?.id ?? 0, userId: profileViewModel.user?.userId ?? "", originalTitle: viewModel.details?.originalTitle ?? "", posterPath: viewModel.details?.posterPath ?? "", releaseDate: viewModel.details?.releaseDate ?? "", title: viewModel.details?.title ?? "")
                     }) {
                         Image(systemName: "bookmark")
                     }

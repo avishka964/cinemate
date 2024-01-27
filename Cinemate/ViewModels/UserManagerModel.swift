@@ -1,47 +1,18 @@
 //
-//  UserManagerModel.swift
+//  UserViewModel.swift
 //  Cinemate
 //
-//  Created by Avishka Kapuruge on 2023-12-17.
+//  Created by Avishka Kapuruge on 2024-01-27.
 //
 
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Users: Codable {
-    let userId: String
-    let email: String?
-    let photoUrl: String?
-    let dateCreated: Date?
-    
-    init(auth: AuthDataResultModel) {
-        self.userId = auth.uid
-        self.email = auth.email
-        self.photoUrl = auth.photoUrl
-        self.dateCreated = Date()
-    }
-    
-    init(
-        userId: String,
-        email: String? = nil,
-        photoUrl: String? = nil,
-        dateCreated: Date? = nil
-    ) {
-        self.userId = userId
-        self.email = email
-        self.photoUrl = photoUrl
-        self.dateCreated = dateCreated
-    }
-    
-}
-
-
 final class UserManagerModel {
     
     static let shared = UserManagerModel()
     private init() {}
-    
     
     private let userCollection = Firestore.firestore().collection("users")
     

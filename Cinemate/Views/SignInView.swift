@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignInView: View {
     
-    @StateObject private var viewModel = AuthenticationViewModel()
+    @StateObject private var viewModel = AuthViewModel()
     @Binding var showSignInView: Bool
     
     var body: some View {

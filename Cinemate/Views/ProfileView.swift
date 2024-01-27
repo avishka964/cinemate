@@ -37,6 +37,9 @@ struct ProfileView: View {
                                 Image(systemName: "photo.fill").renderingMode(.original).font(.largeTitle).frame(width: 100, height: 100)
                             }
                         }
+                        //MARK: name
+                        Text(user.name ?? "").font(.custom(CustomFont.Roboto.regular, size: 16))
+                            .padding(.bottom, 1)
                         //MARK: email
                         Text(user.email ?? "").font(.custom(CustomFont.Roboto.regular, size: 14)).tint(Color("CSGray"))
                     }

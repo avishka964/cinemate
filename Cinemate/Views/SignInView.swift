@@ -23,7 +23,6 @@ struct SignInView: View {
             
             VStack(alignment: .leading){
                 Spacer()
-                
                 Text("Welcome to the \nCinemate")
                     .font(.custom(CustomFont.Roboto.bold, size: 40))
                     .foregroundStyle(.white)

@@ -35,7 +35,6 @@ struct GenreView: View {
                     }
                 })
                 .padding(.top)
-                
                 Spacer()
             }
             .padding()

@@ -80,20 +80,15 @@ class WatchlistViewModel: ObservableObject {
     }
     
     func deleteMovie(userId: String, id: Int) {
-        print("delete: \(userId)")
-        print("delete: \(id)")
-
         db.collection("watchlist")
             .whereField("user_id", isEqualTo: userId)
             .whereField("id", isEqualTo: id)
             .getDocuments { [weak self] (querySnapshot, error) in
                 guard let self = self, let documents = querySnapshot?.documents else { return }
-
                 if let error = error {
                     print("Error fetching watchlist: \(error)")
                     return
                 }
-
                 for document in documents {
                     let documentID = document.documentID
                     self.db.collection("watchlist").document(documentID).delete { error in

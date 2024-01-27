@@ -17,7 +17,6 @@ struct ProfileView: View {
             VStack {
                 //MARK: heading
                 HeadingView(mainHeading: "Profile", subHeading: "Behind the Screens: Your Movie Profile")
-                
                 VStack {
                     if let user = viewModel.user {
                         //MARK: photo url
@@ -86,7 +85,6 @@ struct ProfileView: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        
     }
 }
 

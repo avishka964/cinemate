@@ -37,7 +37,6 @@ class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.topMovies = decodedData.results
                     }
-//                    print("top_rated res: \(decodedData.results)")
                 } catch {
                     DispatchQueue.main.async {
                         print("Decoding Error: \(error.localizedDescription)")
@@ -72,7 +71,6 @@ class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.genresList = decodedData.genres
                     }
-//                    print("genres res: \(decodedData.genres)")
                 } catch {
                     DispatchQueue.main.async {
                         print("Decoding Error: \(error.localizedDescription)")
@@ -105,7 +103,6 @@ class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.genresMovies = decodedData.results
                     }
-//                    print("movies by genres res: \(decodedData.results)")
                 } catch {
                     DispatchQueue.main.async {
                         print("Decoding Error: \(error.localizedDescription)")
@@ -140,7 +137,6 @@ class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.trendingMovies = decodedData.results
                     }
-//                    print("trending movies res: \(decodedData.results)")
                 } catch {
                     DispatchQueue.main.async {
                         print("Decoding Error: \(error.localizedDescription)")

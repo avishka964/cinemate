@@ -36,7 +36,6 @@ class SearchViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.searchMovies = decodedData.results
                     }
-//                    print("search res: \(decodedData.results)")
                 } catch let error as DecodingError {
                     print("Decoding Error: \(error)")
                 } catch {

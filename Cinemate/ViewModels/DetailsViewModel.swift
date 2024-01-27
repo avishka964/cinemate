@@ -32,8 +32,6 @@ class DetailsViewModel: ObservableObject {
                 return
             }
             if let data = data {
-//                let jsonString = String(data: data, encoding: .utf8)
-//                print("JSON Response: \(jsonString ?? "")")
                 do {
                     let decoder = JSONDecoder()
                     let decodedData = try decoder.decode(MovieDetail.self, from: data)
@@ -43,7 +41,6 @@ class DetailsViewModel: ObservableObject {
                         self.isFetchDetails = true
                         self.videoKey = filterdVideo?[0].key ?? ""
                     }
-//                    print("details res: \(filterdVideo?[0].key ?? "")")
                 } catch let error as DecodingError {
                     print("Decoding Error: \(error)")
                 } catch {
@@ -78,7 +75,6 @@ class DetailsViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.cast = filterdCast
                     }
-//                    print("credits res: \(decodedData)")
                 } catch let error as DecodingError {
                     print("Decoding Error: \(error)")
                 } catch {

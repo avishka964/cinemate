@@ -53,7 +53,7 @@ struct WatchListView: View {
     }
     
     func fetchWatchlist() {
-        viewModel.fetchMovie(userId: profileViewModel.user?.userId ?? "")
+        viewModel.fetchWatchlist(userId: profileViewModel.user?.userId ?? "")
     }
 }
 

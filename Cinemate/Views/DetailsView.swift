@@ -105,13 +105,24 @@ struct DetailsView: View {
                     }
                     Spacer()
                     //MARK: bookmark button
-                    Button(action: {
-                        watchlistViewModel.addMovie(id: viewModel.details?.id ?? 0, userId: profileViewModel.user?.userId ?? "", originalTitle: viewModel.details?.originalTitle ?? "", posterPath: viewModel.details?.posterPath ?? "", releaseDate: viewModel.details?.releaseDate ?? "", title: viewModel.details?.title ?? "")
-                    }) {
-                        Image(systemName: "bookmark")
+                    if profileViewModel.isHaveUser {
+                        Button(action: {
+                            if watchlistViewModel.isBookmarked {
+                                watchlistViewModel.deleteMovie(userId: profileViewModel.user?.userId ?? "", id: viewModel.details?.id ?? 0)
+                                watchlistViewModel.isBookmarked = false
+                            } else {
+                                watchlistViewModel.addMovie(id: viewModel.details?.id ?? 0, userId: profileViewModel.user?.userId ?? "", originalTitle: viewModel.details?.originalTitle ?? "", posterPath: viewModel.details?.posterPath ?? "", releaseDate: viewModel.details?.releaseDate ?? "", title: viewModel.details?.title ?? "")
+                                watchlistViewModel.isBookmarked = true
+                            }
+                        }) {
+                            Image(systemName: watchlistViewModel.isBookmarked ? "bookmark.fill" : "bookmark")
+                        }
+                        .padding(10)
+                        .foregroundColor(.red)
+                        .onAppear{
+                            watchlistViewModel.fetchMovie(userId: profileViewModel.user?.userId ?? "", id: viewModel.details?.id ?? 0)
+                        }
                     }
-                    .padding(10)
-                    .foregroundColor(.red)
                 }
                 //MARK: genres chips
                 ScrollView(.horizontal, showsIndicators: false, content: {
